@@ -2,45 +2,29 @@
 
 **a. Create a conda virtual environment and activate it.**
 ```shell
-conda create -n occ python=3.8 -y
-conda activate occ
+conda create -n InverseMatrixVT3D python=3.8 -y
+conda activate InverseMatrixVT3D
 ```
 
 **b. Install PyTorch and torchvision following the [official instructions](https://pytorch.org/).**
 ```shell
-pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
 
-**c. Install mmcv series.**
+**c. Install mmcv, mmdet, mmdet3d, and mmseg.**
 ```shell
-pip install mmcv-full==1.4.0 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.9.0/index.html
-pip install mmdet==2.14.0
-pip install mmsegmentation==0.14.1
+pip install -U openmim
+mim install mmengine
+mim install 'mmcv>=2.0.0rc4'
+mim install 'mmdet>=3.0.0'
+mim install "mmdet3d>=1.1.0"
+pip install "mmsegmentation>=1.0.0"
 ```
 
 **d. Install others.**
 ```shell
-pip install timm
-pip install einops
-pip install torch-scatter==2.0.7 -f https://data.pyg.org/whl/torch-1.9.0%2Bcu111/torch_scatter-2.0.7-cp38-cp38-linux_x86_64.whl
-```
-
-**e. Install PanoOcc.**
-```shell
-git clone https://github.com/Robertwyq/PanoOcc
-
-cd mmdetection3d 
-pip install -v -e . (python setup.py install)
-# for InternImage
-cd ops 
-pip install -v -e .
-```
-
-**Other Problems Maybe Meet**
-```shell
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-sudo apt-get install make gcc g++
-pip install ninja
-sudo apt-get install libgl1-mesa-dev
-pip install setuptools==56.1.0
+pip install focal_loss_torch
+git clone https://github.com/CoinCheung/pytorch-loss.git
+cd pytorch-loss
+python setup.py install
 ```
