@@ -28,3 +28,9 @@ git clone https://github.com/CoinCheung/pytorch-loss.git
 cd pytorch-loss
 python setup.py install
 ```
+**e. Download backbone pretrain weight.**
+```shell
+cd InverseMatrixVT3D
+mkdir ckpt
+wget https://github.com/zhiqi-li/storage/releases/download/v1.0/r101_dcn_fcos3d_pretrain.pth
+```
