@@ -25,11 +25,11 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 </p>
 
 # Model Zoo
-| Backbone | Config | Image Size | Epochs |  Pretrain | Memory | mIoU | 
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | 
-| R101-DCN | [InverseMatrixVT3D-base](./configs/InverseMatrixVT3D_256_256_32.py) | $1600\times900$ | 4 | nus-det | 16 G | 26.03 | 
-| R101-DCN | [InverseMatrixVT3D-small](./configs/InverseMatrixVT3D_200_200_16.py) | $1600\times900$ | 4 | nus-det | 14 G | 25.95 | 
-
+| Backbone | Config | Image Size | Epochs |  Pretrain | Memory | mIoU | Model Weights |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | 
+| R101-DCN | [InverseMatrixVT3D-base](./configs/InverseMatrixVT3D_256_256_32.py) | $1600\times900$ | 4 | nus-det | 16 G | 26.03 | [ckpt](https://drive.google.com/file/d/1ll7qDg4nGMc-SMtMKxW8-hhlxNS6Xtic/view?usp=sharing)
+| R101-DCN | [InverseMatrixVT3D-small](./configs/InverseMatrixVT3D_200_200_16.py) | $1600\times900$ | 4 | nus-det | 14 G | 25.95 | [ckpt](https://drive.google.com/file/d/1xuPH9ak5uctAH-UGipFbr6pJMKm6lLOv/view?usp=sharing)
+The user can get a fixed version result by setting enable_fix=True in each config file.
 
 ## Acknowledgement
 Many thanks to these excellent projects:
