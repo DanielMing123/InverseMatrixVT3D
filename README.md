@@ -9,9 +9,9 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 </p>
 
 # Getting Started
-- [Installation]
-- [Dataset]
-- [Run and Eval]
+- [Installation](docs/install.md)
+- [Dataset](docs/dataset.md)
+- [Run and Eval](docs/getting_started.md)
 # Performance
 
 <p align='center'>
