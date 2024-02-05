@@ -1,17 +1,15 @@
 # NuScenes
 Download nuScenes V1.0 full dataset data [HERE](https://www.nuscenes.org/download). 
 
-*Generate annotation pickle files by running following command*
+Generate annotation pickle files by running the following command:
 ```
 python tools/create_data.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes
 ```
-
 Using the above code will generate `nuscenes_infos_{train,val}.pkl`.
 
 ## NuScenes Occupancy Benchmark 
 Download the SurroundOcc's 3D Occupancy annotations [HERE](https://github.com/weiyithu/SurroundOcc/blob/main/docs/data.md)
 - only support training and validation set
-- 
 
 **dataset structure**
 ```
