@@ -19,12 +19,9 @@ InverseMatrixVT3D
 │   │   ├── maps/
 │   │   ├── samples/
 │   │   ├── sweeps/
+│   │   ├── occ_samples/
 │   │   ├── v1.0-test/
 |   |   ├── v1.0-trainval/
-|   |   ├── lidarseg
-|   |   │   ├──v1.0-trainval/
-|   |   │   ├──v1.0-mini/
-|   |   │   ├──v1.0-test/
 |   |   ├── nuscenes_infos_train.pkl
 |   |   ├── nuscenes_infos_val.pkl
 |   |   ├── nuscenes_infos_test.pkl
