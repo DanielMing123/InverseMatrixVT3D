@@ -5,7 +5,7 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 # Method Pipeline
 
 <p align='center'>
-<img src="./Figs/InverseMatrixVT3D-3.pdf" width="720px">
+<img src="./Figs/InverseMatrixVT3D.jpg" width="720px">
 </p>
 
 # Getting Started
@@ -15,7 +15,7 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 # Performance
 
 <p align='center'>
-<img src="./Figs/Res1.png" width="800px">
+<img src="./Figs/Res1.png" width="1200px">
 </p>
 
 # Model Efficiency
