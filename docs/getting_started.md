@@ -1,6 +1,6 @@
 # NuScenes
 
-## 1. NuScenes Occupancy Benchmark (CVPR2023 workshop)
+## 1. NuScenes 3D Occupancy Prediction Benchmark
 **a. Train InverseMatrixVT3D with 8 GPUs for 256*256*32 Resolution.**
 ```shell
 bash tools/dist_train.sh configs/InverseMatrixVT3D_256_256_32.py 8
