@@ -11,7 +11,7 @@ conda activate InverseMatrixVT3D
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
 
-**c. Install mmcv, mmdet, mmdet3d, and mmseg.**
+**c. Install mmengine, mmcv, mmdet, mmdet3d, and mmseg.**
 ```shell
 pip install -U openmim
 mim install mmengine
