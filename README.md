@@ -23,3 +23,21 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 <p align='center'>
 <img src="./Figs/Res2.png" width="400px">
 </p>
+
+## Acknowledgement
+Many thanks to these excellent projects:
+- [SurroundOcc](https://github.com/weiyithu/SurroundOcc)
+- [OccFormer](https://github.com/zhangyp15/OccFormer)
+- [PanoOcc](https://github.com/Robertwyq/PanoOcc)
+- [MonoScene](https://github.com/astra-vision/MonoScene)
+## Bibtex
+If this work is helpful for your research, please consider citing the following BibTeX entry.
+
+```
+@article{ming2024inversematrixvt3d,
+  title={InverseMatrixVT3D: An Efficient Projection Matrix-Based Approach for 3D Occupancy Prediction},
+  author={Ming, Zhenxing and Berrio, Julie Stephany and Shan, Mao and Worrall, Stewart},
+  journal={arXiv preprint arXiv:2401.12422},
+  year={2024}
+}
+```
