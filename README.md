@@ -24,6 +24,12 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 <img src="./Figs/Res2.png" width="400px">
 </p>
 
+# Visualization
+<p align='center'>
+<img src="./Figs/vis1.jpg" width="400px">
+<img src="./Figs/vis2.jpg" width="400px">
+</p>
+
 # Model Zoo
 | Backbone | Config | Image Size | Epochs |  Pretrain | Memory | mIoU | Model Weights |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | 
