@@ -24,6 +24,13 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 <img src="./Figs/Res2.png" width="400px">
 </p>
 
+# Model Zoo
+| Backbone | Config | Image Size | Epochs |  Pretrain | Memory | mIoU | 
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | 
+| R101-DCN | [InverseMatrixVT3D-base](./configs/InverseMatrixVT3D_256_256_32.py) | $1600\times900$ | 4 | nus-det | 16 G | 26.03 | 
+| R101-DCN | [InverseMatrixVT3D-small](./configs/InverseMatrixVT3D_200_200_16.py) | $1600\times900$ | 4 | nus-det | 14 G | 25.95 | 
+
+
 ## Acknowledgement
 Many thanks to these excellent projects:
 - [SurroundOcc](https://github.com/weiyithu/SurroundOcc)
