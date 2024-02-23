@@ -40,6 +40,9 @@ class DataPreprocessor(Det3DDataPreprocessor):
         if 'occ_200' in data['inputs']:
             batch_inputs['dense_occ_200'] = data['inputs']['occ_200']
             
+        if 'occ_semantickitti' in data['inputs']:
+            batch_inputs['occ_semantickitti'] = data['inputs']['occ_semantickitti']
+            
         if 'imgs' in inputs:
             imgs = inputs['imgs']
 

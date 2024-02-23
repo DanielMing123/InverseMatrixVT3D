@@ -114,7 +114,7 @@ class NuScenesSegDataset(BaseDataset):
         # only be used in `PointSegClassMapping` in pipeline
         # to map original semantic class to valid category ids.
         info['seg_label_mapping'] = self.metainfo['label_mapping']
-
+        
         # 'eval_ann_info' will be updated in loading transforms
         if self.test_mode:
             info['eval_ann_info'] = dict()

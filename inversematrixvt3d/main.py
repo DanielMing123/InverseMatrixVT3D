@@ -59,7 +59,7 @@ class InverseMatrixVT3D(Base3DSegmentor):
         img_metas = []
         for data_sample in batch_data_samples:
             img_meta = dict(lidar2img=data_sample.lidar2img,
-                            img_shape=torch.Tensor([928,1600])
+                            img_shape=torch.Tensor([imgs.shape[-2],imgs.shape[-1]])
                             )
             img_metas.append(img_meta)
         
@@ -71,13 +71,19 @@ class InverseMatrixVT3D(Base3DSegmentor):
         vox_logits_lvl0, vox_logits_lvl1, vox_logits_lvl2, vox_logits_lvl3 = self._forward(batch_inputs,batch_data_samples)
         B,X,Y,Z,Cls = vox_logits_lvl0.shape
         if X == 256:
-            voxel_occupy_labels_200 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1,1,1],np.array([len(batch_data_samples),200,200,16],dtype=np.int32))
-            voxel_occupy_labels_200 = voxel_occupy_labels_200.unsqueeze(1).float()
-            voxels_lvl0 =F.interpolate(voxel_occupy_labels_200,size=(256,256,32))
-            voxels_lvl0 = voxels_lvl0.squeeze(1).round().long()
-            voxels_lvl1 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1.5625,1.5625,1],np.array([len(batch_data_samples),128,128,16],dtype=np.int32))
-            voxels_lvl2 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[3.125,3.125,2],np.array([len(batch_data_samples),64,64,8],dtype=np.int32))
-            voxels_lvl3 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[6.25,6.25,4],np.array([len(batch_data_samples),32,32,4],dtype=np.int32))
+            if 'dense_occ_200' in batch_inputs.keys():
+                voxel_occupy_labels_200 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1,1,1],np.array([len(batch_data_samples),200,200,16],dtype=np.int32))
+                voxel_occupy_labels_200 = voxel_occupy_labels_200.unsqueeze(1).float()
+                voxels_lvl0 =F.interpolate(voxel_occupy_labels_200,size=(256,256,32))
+                voxels_lvl0 = voxels_lvl0.squeeze(1).round().long()
+                voxels_lvl1 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1.5625,1.5625,1],np.array([len(batch_data_samples),128,128,16],dtype=np.int32))
+                voxels_lvl2 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[3.125,3.125,2],np.array([len(batch_data_samples),64,64,8],dtype=np.int32))
+                voxels_lvl3 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[6.25,6.25,4],np.array([len(batch_data_samples),32,32,4],dtype=np.int32))
+            else:
+                voxels_lvl0 = self.multiscale_supervision(batch_inputs['occ_semantickitti'],[1,1,1],np.array([len(batch_data_samples),256,256,32],dtype=np.int32))
+                voxels_lvl1 = self.multiscale_supervision(batch_inputs['occ_semantickitti'],[2,2,2],np.array([len(batch_data_samples),128,128,16],dtype=np.int32))
+                voxels_lvl2 = self.multiscale_supervision(batch_inputs['occ_semantickitti'],[4,4,4],np.array([len(batch_data_samples),64,64,8],dtype=np.int32))
+                voxels_lvl3 = self.multiscale_supervision(batch_inputs['occ_semantickitti'],[8,8,8],np.array([len(batch_data_samples),32,32,4],dtype=np.int32))
         elif X == 200:
             voxels_lvl0 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1,1,1],np.array([len(batch_data_samples),200,200,16],dtype=np.int32))
             voxels_lvl1 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[2,2,2],np.array([len(batch_data_samples),100,100,8],dtype=np.int32))

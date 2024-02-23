@@ -10,9 +10,83 @@ from mmcv.transforms.base import BaseTransform
 from mmengine.fileio import get
 from mmdet3d.datasets.transforms import LoadMultiViewImageFromFiles, Pack3DDetInputs
 from mmdet3d.registry import TRANSFORMS
+import pykitti.utils as utils
 
 Number = Union[int, float]
 
+
+@TRANSFORMS.register_module()
+class SemanticKITTI_Image_Load(LoadMultiViewImageFromFiles):
+    def transform(self, result: dict) -> Optional[dict]:
+        calib_filepath = result['calib_path']
+        filedata = utils.read_calib_file(calib_filepath)
+        P_rect_20 = np.reshape(filedata['P2'], (3, 4))
+        T2 = np.eye(4)
+        T2[0, 3] = P_rect_20[0, 3] / P_rect_20[0, 0]
+        T_cam0_velo = np.reshape(filedata['Tr'], (3, 4))
+        T_cam0_velo = np.vstack([T_cam0_velo, [0, 0, 0, 1]])
+        T_cam2_velo = T2.dot(T_cam0_velo)
+        result['lidar2img'] = np.stack([T_cam2_velo], axis=0)
+        
+        img_byte = get(result['img_path'], backend_args=self.backend_args) 
+        img = mmcv.imfrombytes(img_byte, flag=self.color_type)
+        result['img'] = [img]
+        
+        return result
+
+@TRANSFORMS.register_module()
+class LoadSemanticKITTI_Occupancy(BaseTransform):
+    def get_remap_lut(self, label_map):
+        maxkey = max(label_map.keys())
+
+        # +100 hack making lut bigger just in case there are unknown labels
+        remap_lut = np.zeros((maxkey + 100), dtype=np.int32)
+        remap_lut[list(label_map.keys())] = list(label_map.values())
+
+        # in completion we have to distinguish empty and invalid voxels.
+        # Important: For voxels 0 corresponds to "empty" and not "unlabeled".
+        remap_lut[remap_lut == 0] = 255  # map 0 to 'invalid'
+        remap_lut[0] = 0  # only 'empty' stays 'empty'.
+
+        return remap_lut
+        
+    
+    def unpack(self, compressed):
+        ''' given a bit encoded voxel grid, make a normal voxel grid out of it.  '''
+        uncompressed = np.zeros(compressed.shape[0] * 8, dtype=np.uint8)
+        uncompressed[::8] = compressed[:] >> 7 & 1
+        uncompressed[1::8] = compressed[:] >> 6 & 1
+        uncompressed[2::8] = compressed[:] >> 5 & 1
+        uncompressed[3::8] = compressed[:] >> 4 & 1
+        uncompressed[4::8] = compressed[:] >> 3 & 1
+        uncompressed[5::8] = compressed[:] >> 2 & 1
+        uncompressed[6::8] = compressed[:] >> 1 & 1
+        uncompressed[7::8] = compressed[:] & 1
+
+        return uncompressed
+    
+    def transform(self, result: dict) -> dict:
+        gt = np.fromfile(result['voxel_gt_path'],dtype=np.uint16).astype(np.float32)
+        invalid = np.fromfile(result['voxel_invalid_path'], dtype=np.uint8)
+        invalid = self.unpack(invalid)
+        remap_lut = self.get_remap_lut(result['label_mapping'])
+        gt = remap_lut[gt.astype(np.uint16)].astype(np.float32)  # Remap 20 classes semanticKITTI SSC
+        gt[np.isclose(invalid, 1)] = 255  # Setting to unknown all voxels marked on invalid mask...
+        gt = gt.reshape([256, 256, 32])
+        gt = torch.from_numpy(gt)
+        idx = torch.where(gt > 0)
+        label = gt[idx[0],idx[1],idx[2]]
+        semantickitti_occ = torch.stack([idx[0],idx[1],idx[2],label],dim=1).long()
+        
+        result['occ_semantickitti'] = semantickitti_occ
+        return result
+        
+    def __repr__(self) -> str:
+        """str: Return a string that describes the module."""
+        repr_str = self.__class__.__name__
+        return repr_str
+    
+    
 
 @TRANSFORMS.register_module()
 class BEVLoadMultiViewImageFromFiles(LoadMultiViewImageFromFiles):
@@ -82,6 +156,10 @@ class BEVLoadMultiViewImageFromFiles(LoadMultiViewImageFromFiles):
             mmcv.imfrombytes(img_byte, flag=self.color_type)
             for img_byte in img_bytes
         ]
+        # imgs = [
+        #     cv2.resize(mmcv.imfrombytes(img_byte, flag=self.color_type,backend='cv2'),(0,0),fx=0.2,fy=0.2,interpolation=cv2.INTER_AREA)
+        #     for img_byte in img_bytes
+        # ]
         # handle the image with different shape
         img_shapes = np.stack([img.shape for img in imgs], axis=0)
         img_shape_max = np.max(img_shapes, axis=0)
