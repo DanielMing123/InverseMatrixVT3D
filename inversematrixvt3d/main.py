@@ -140,18 +140,22 @@ class InverseMatrixVT3D(Base3DSegmentor):
         B,X,Y,Z,Cls = occ_ori_logits.shape
         final_vox_logits = []
         if X == 256:
-            voxel_occupy_labels_200 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1,1,1],np.array([len(batch_data_samples),200,200,16],dtype=np.int32))
-            voxel_occupy_labels_200 = voxel_occupy_labels_200.unsqueeze(1).float()
-            voxels_lvl0 =F.interpolate(voxel_occupy_labels_200,size=(256,256,32))
-            voxels_lvl0 = voxels_lvl0.squeeze(1).round().long()
-            voxels_lvl0 = voxels_lvl0.reshape(len(batch_data_samples),-1)
+            if 'dense_occ_200' in batch_inputs.keys():
+                voxel_occupy_labels_200 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1,1,1],np.array([len(batch_data_samples),200,200,16],dtype=np.int32))
+                voxel_occupy_labels_200 = voxel_occupy_labels_200.unsqueeze(1).float()
+                voxels_lvl0 =F.interpolate(voxel_occupy_labels_200,size=(256,256,32))
+                voxels_lvl0 = voxels_lvl0.squeeze(1).round().long()
+                voxels_lvl0 = voxels_lvl0.reshape(len(batch_data_samples),-1)
+            else:
+                voxels_lvl0 = self.multiscale_supervision(batch_inputs['occ_semantickitti'],[1,1,1],np.array([len(batch_data_samples),256,256,32],dtype=np.int32))
+                voxels_lvl0 = voxels_lvl0.reshape(len(batch_data_samples),-1)
         elif X == 200:
             voxels_lvl0 = self.multiscale_supervision(batch_inputs['dense_occ_200'],[1,1,1],np.array([len(batch_data_samples),200,200,16],dtype=np.int32))
             voxels_lvl0 = voxels_lvl0.reshape(len(batch_data_samples),-1)
             
         for i, data_sample in enumerate(batch_data_samples):
             data_sample.eval_ann_info['pts_semantic_mask'] = voxels_lvl0[i].cpu().numpy().astype(np.uint8) # voxels_256
-            final_vox_logits.append(occ_ori_logits[i].reshape(-1,17))
+            final_vox_logits.append(occ_ori_logits[i].reshape(-1,Cls))
 
         return self.postprocess_result(final_vox_logits, batch_data_samples)
     

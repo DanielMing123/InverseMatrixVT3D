@@ -57,5 +57,3 @@ class OccHead(BaseModule):
         else:
             logits_lvl0 = self.mlp_occ_lvl0(xyz_feat_lvl0.permute(0,2,3,4,1))
             return logits_lvl0
-                
-        

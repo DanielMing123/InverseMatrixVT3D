@@ -41,7 +41,7 @@ model = dict(
     view_transformer=dict(
         type='MultiScaleInverseMatrixVT',
         feature_strides=[8, 16, 32],
-        in_channel=[32,64,128,256],
+        in_channel=[64,128,256,512],
         grid_size=[[128, 128, 16],
                    [64, 64, 8],
                    [32, 32, 4]],
@@ -54,7 +54,7 @@ model = dict(
         ),
     occ_head=dict(
         type='OccHead',
-        channels=[32,64,128,256],
+        channels=[64,128,256,512],
         num_classes=nbr_class
         )
 )
@@ -99,7 +99,6 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        # data_prefix=data_prefix,
         ann_file='semantickitti_infos_train.pkl',
         pipeline=train_pipeline,
         test_mode=False))
@@ -113,7 +112,6 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        # data_prefix=data_prefix,
         ann_file='semantickitti_infos_val.pkl',
         pipeline=val_pipeline,
         test_mode=True)) # True
@@ -149,7 +147,7 @@ param_scheduler = [
         convert_to_iter_based=True)
 ]
 
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=6,val_begin=1, val_interval=1)
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=10,val_begin=1, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 

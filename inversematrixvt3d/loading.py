@@ -26,7 +26,10 @@ class SemanticKITTI_Image_Load(LoadMultiViewImageFromFiles):
         T_cam0_velo = np.reshape(filedata['Tr'], (3, 4))
         T_cam0_velo = np.vstack([T_cam0_velo, [0, 0, 0, 1]])
         T_cam2_velo = T2.dot(T_cam0_velo)
-        result['lidar2img'] = np.stack([T_cam2_velo], axis=0)
+        K_P2 = np.eye(4)
+        K_P2[:3,:3] = P_rect_20[:3,:3]
+        lidar2img = K_P2.dot(T_cam2_velo)
+        result['lidar2img'] = np.stack([lidar2img], axis=0)
         
         img_byte = get(result['img_path'], backend_args=self.backend_args) 
         img = mmcv.imfrombytes(img_byte, flag=self.color_type)
@@ -71,6 +74,7 @@ class LoadSemanticKITTI_Occupancy(BaseTransform):
         invalid = self.unpack(invalid)
         remap_lut = self.get_remap_lut(result['label_mapping'])
         gt = remap_lut[gt.astype(np.uint16)].astype(np.float32)  # Remap 20 classes semanticKITTI SSC
+        # gt[gt!=0] = 1
         gt[np.isclose(invalid, 1)] = 255  # Setting to unknown all voxels marked on invalid mask...
         gt = gt.reshape([256, 256, 32])
         gt = torch.from_numpy(gt)

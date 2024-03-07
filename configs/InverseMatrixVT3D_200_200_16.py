@@ -18,7 +18,7 @@ data_prefix = dict(
 input_modality = dict(use_lidar=True, use_camera=True)
 backend_args = None
 nbr_class = 17
-find_unused_parameters=False
+find_unused_parameters=True
 
 model = dict(
     type='InverseMatrixVT3D',
@@ -59,7 +59,7 @@ model = dict(
         z_bound=[-5., 3.],
         sampling_rate=[4,5,6],
         num_cams=[None,None,None],
-        enable_fix=True
+        enable_fix=False
         ),
     occ_head=dict(
         type='OccHead',

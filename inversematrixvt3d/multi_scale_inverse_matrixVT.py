@@ -139,7 +139,7 @@ class SingleScaleInverseMatrixVT(BaseModule):
         if in_index == 0: 
             self.bev_attn_layer = EfficientViTBlock(type='s',
                                                 ed=in_channel,
-                                                kd=8,
+                                                kd=16,
                                                 nh=8,
                                                 ar=1,
                                                 resolution=self.grid_size[0], # Feature Map Size
@@ -148,7 +148,7 @@ class SingleScaleInverseMatrixVT(BaseModule):
         elif in_index == 1:
             self.bev_attn_layer = EfficientViTBlock(type='s',
                                                 ed=in_channel,
-                                                kd=16,
+                                                kd=32,
                                                 nh=8,
                                                 ar=1,
                                                 resolution=self.grid_size[0],
@@ -157,7 +157,7 @@ class SingleScaleInverseMatrixVT(BaseModule):
         else:
             self.bev_attn_layer = EfficientViTBlock(type='s',
                                                 ed=in_channel,
-                                                kd=32,
+                                                kd=64,
                                                 nh=8,
                                                 ar=1,
                                                 resolution=self.grid_size[0],
@@ -300,9 +300,9 @@ class SingleScaleInverseMatrixVT(BaseModule):
                 
         # Apply ASPP on final 3D volume BEV slice
         cam_bevs = self.bev_attn_layer(cam_xy_feats)
-        cam_bevs = self.aspp_xy(cam_bevs)
+        cam_bevs = self.aspp_xy(cam_bevs) # cam_bevs
         coeff = self.combine_coeff(cam_xyz_feats).sigmoid()
-        cam_xyz_feats = cam_xyz_feats + coeff * cam_bevs.unsqueeze(-1)
+        cam_xyz_feats = cam_xyz_feats + coeff * cam_bevs.unsqueeze(-1) # cam_bevs
         
         return cam_xyz_feats
         
