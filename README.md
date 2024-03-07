@@ -17,6 +17,9 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 <p align='center'>
 <img src="./Figs/Res1.png" width="1200px">
 </p>
+<p align='center'>
+<img src="./Figs/benchmark2.png" width="1200px">
+</p>
 
 # Model Efficiency
 
