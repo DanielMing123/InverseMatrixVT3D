@@ -12,35 +12,12 @@ This paper introduces InverseMatrixVT3D, an efficient method for transforming mu
 - [Installation](docs/install.md)
 - [Dataset](docs/dataset.md)
 - [Run and Eval](docs/getting_started.md)
-# Performance
-
-<p align='center'>
-<img src="./Figs/Res1.png" width="1200px">
-</p>
-<p align='center'>
-<img src="./Figs/benchmark2.png" width="1200px">
-</p>
-
-# Model Efficiency
-
-<p align='center'>
-<img src="./Figs/Res2.png" width="400px">
-</p>
 
 # Visualization
 <p align='center'>
 <img src="./Figs/vis1.jpg" width="400px">
 <img src="./Figs/vis2.jpg" width="400px">
 </p>
-
-# Model Zoo
-| Backbone | Config | Image Size | Epochs |  Pretrain | Memory | mIoU | Model Weights |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | 
-| R101-DCN | [InverseMatrixVT3D-base](./configs/InverseMatrixVT3D_256_256_32.py) | $1600\times900$ | 4 | nus-det | 16 G | 26.03 | [ckpt](https://drive.google.com/file/d/1ll7qDg4nGMc-SMtMKxW8-hhlxNS6Xtic/view?usp=sharing)
-| R101-DCN | [InverseMatrixVT3D-small](./configs/InverseMatrixVT3D_200_200_16.py) | $1600\times900$ | 4 | nus-det | 14 G | 25.95 | [ckpt](https://drive.google.com/file/d/1xuPH9ak5uctAH-UGipFbr6pJMKm6lLOv/view?usp=sharing)
-| R101-DCN | InverseMatrixVT3D-semantickitti | $1226\times370$ | 10 |  | 11 G | 13.69 | [ckpt](https://drive.google.com/file/d/1Fd9Zht4t3bRIcuAJV9P_SdBfAe63LaL0/view?usp=sharing)
-
-The user can get a fixed version result by setting enable_fix=True in each config file. For the SemanticKitti dataset evaluation, please switch to the try-semantickitti branch.
 
 ## Acknowledgement
 Many thanks to these excellent projects:
