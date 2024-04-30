@@ -139,7 +139,7 @@ class SingleScaleInverseMatrixVT(BaseModule):
         if in_index == 0: 
             self.bev_attn_layer = EfficientViTBlock(type='s',
                                                 ed=in_channel,
-                                                kd=16,
+                                                kd=8,
                                                 nh=8,
                                                 ar=1,
                                                 resolution=self.grid_size[0], # Feature Map Size
@@ -148,7 +148,7 @@ class SingleScaleInverseMatrixVT(BaseModule):
         elif in_index == 1:
             self.bev_attn_layer = EfficientViTBlock(type='s',
                                                 ed=in_channel,
-                                                kd=32,
+                                                kd=16,
                                                 nh=8,
                                                 ar=1,
                                                 resolution=self.grid_size[0],
@@ -157,7 +157,7 @@ class SingleScaleInverseMatrixVT(BaseModule):
         else:
             self.bev_attn_layer = EfficientViTBlock(type='s',
                                                 ed=in_channel,
-                                                kd=64,
+                                                kd=32,
                                                 nh=8,
                                                 ar=1,
                                                 resolution=self.grid_size[0],
