@@ -41,7 +41,7 @@ model = dict(
     view_transformer=dict(
         type='MultiScaleInverseMatrixVT',
         feature_strides=[8, 16, 32],
-        in_channel=[64,128,256,512],
+        in_channel=[32,64,128,256],
         grid_size=[[128, 128, 16],
                    [64, 64, 8],
                    [32, 32, 4]],
@@ -54,7 +54,7 @@ model = dict(
         ),
     occ_head=dict(
         type='OccHead',
-        channels=[64,128,256,512],
+        channels=[32,64,128,256],
         num_classes=nbr_class
         )
 )
