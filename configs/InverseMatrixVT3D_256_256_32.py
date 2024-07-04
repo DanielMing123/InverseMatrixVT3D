@@ -59,7 +59,7 @@ model = dict(
         z_bound=[-5., 3.],
         sampling_rate=[3,4,5],
         num_cams=[None,None,None],
-        enable_fix=True
+        enable_fix=False
         ),
     occ_head=dict(
         type='OccHead',
@@ -131,8 +131,7 @@ val_dataloader = dict(
 
 test_dataloader = val_dataloader
 
-
-val_evaluator = dict(type='SegMetric')
+val_evaluator = dict(type='EvalMetric')
 
 test_evaluator = val_evaluator
 
@@ -160,7 +159,7 @@ param_scheduler = [
         convert_to_iter_based=True)
 ]
 
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=6,val_begin=1, val_interval=1)
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=24,val_begin=1, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
