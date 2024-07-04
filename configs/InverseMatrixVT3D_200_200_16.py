@@ -59,7 +59,7 @@ model = dict(
         z_bound=[-5., 3.],
         sampling_rate=[4,5,6],
         num_cams=[None,None,None],
-        enable_fix=True
+        enable_fix=False
         ),
     occ_head=dict(
         type='OccHead',
@@ -132,7 +132,7 @@ val_dataloader = dict(
 test_dataloader = val_dataloader
 
 
-val_evaluator = dict(type='SegMetric')
+val_evaluator = dict(type='EvalMetric')
 
 test_evaluator = val_evaluator
 
