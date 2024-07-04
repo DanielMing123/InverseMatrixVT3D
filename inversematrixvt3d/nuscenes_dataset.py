@@ -25,15 +25,15 @@ class NuScenesSegDataset(BaseDataset):
     """
     METAINFO = {
         'classes':
-        ('noise', 'barrier', 'bicycle', 'bus', 'car', 'construction_vehicle',
+        ('IoU', 'barrier', 'bicycle', 'bus', 'car', 'construction_vehicle',
          'motorcycle', 'pedestrian', 'traffic_cone', 'trailer', 'truck',
          'driveable_surface', 'other_flat', 'sidewalk', 'terrain', 'manmade',
          'vegetation'),
         'ignore_index':
-        0,
+        255,
         'label_mapping':
-        dict([(1, 0), (5, 0), (7, 0), (8, 0), (10, 0), (11, 0), (13, 0),
-              (19, 0), (20, 0), (0, 0), (29, 0), (31, 0), (9, 1), (14, 2),
+        dict([(1, 255), (5, 255), (7, 255), (8, 255), (10, 255), (11, 255), (13, 255),
+              (19, 255), (20, 255), (0, 255), (29, 255), (31, 255), (9, 1), (14, 2),
               (15, 3), (16, 3), (17, 4), (18, 5), (21, 6), (2, 7), (3, 7),
               (4, 7), (6, 7), (12, 8), (22, 9), (23, 10), (24, 11), (25, 12),
               (26, 13), (27, 14), (28, 15), (30, 16)]),
