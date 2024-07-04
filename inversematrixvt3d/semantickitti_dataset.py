@@ -25,14 +25,14 @@ class SemanticKittiSegDataset(BaseDataset):
     """
     METAINFO = {
         'classes':
-        ('empty', 'car', 'bicycle','motorcycle','truck','other-vehicle','person','bicyclist','motorcyclist','road',
+        ('IoU', 'car', 'bicycle','motorcycle','truck','other-vehicle','person','bicyclist','motorcyclist','road',
          'parking','sidewalk','other-ground','building','fence','vegetation','trunk','terrain','pole','traffic-sign'),
         'ignore_index':
-        0, # 0
+        255, 
         'label_mapping':
-        dict([(0,0),(1,0),(10,1),(11,2),(13,5),(15,3),(16,5),(18,4),(20,5),(30,6),(31,7),
-              (32,8),(40,9),(44,10),(48,11),(49,12),(50,13),(51,14),(52,0),(60,9),(70,15),
-              (71,16),(72,17),(80,18),(81,19),(99,0),(252,1),(253,7),(254,6),(255,8),(256,5),
+        dict([(0,255),(1,255),(10,1),(11,2),(13,5),(15,3),(16,5),(18,4),(20,5),(30,6),(31,7),
+              (32,8),(40,9),(44,10),(48,11),(49,12),(50,13),(51,14),(52,255),(60,9),(70,15),
+              (71,16),(72,17),(80,18),(81,19),(99,255),(252,1),(253,7),(254,6),(255,8),(256,5),
               (257,5),(258,4),(259,5)])
     }
 
