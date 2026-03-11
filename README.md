@@ -29,10 +29,12 @@ Many thanks to these excellent projects:
 If this work is helpful for your research, please consider citing the following BibTeX entry.
 
 ```
-@article{ming2024inversematrixvt3d,
-  title={InverseMatrixVT3D: An Efficient Projection Matrix-Based Approach for 3D Occupancy Prediction},
+@inproceedings{ming2024inversematrixvt3d,
+  title={Inversematrixvt3d: An efficient projection matrix-based approach for 3d occupancy prediction},
   author={Ming, Zhenxing and Berrio, Julie Stephany and Shan, Mao and Worrall, Stewart},
-  journal={arXiv preprint arXiv:2401.12422},
-  year={2024}
+  booktitle={2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={9565--9572},
+  year={2024},
+  organization={IEEE}
 }
 ```
